@@ -374,6 +374,11 @@
 								<li><a href="/admin/jenis" class="@if ($activePage == 'jenis') active @endif">Data Jenis</a></li>
 								<li><a href="/admin/metode-pembayaran" class="@if ($activePage == 'metode_pembayaran') active @endif">Metode Pembayaran</a></li>
 								<li><a href="/admin/barang" class="@if ($activePage == 'barang') active @endif">Data Barang</a></li>
+								<!-- <a href="/admin/pemasukan" class="dropdown-toggle no-arrow @if ($activePage == 'pemasukan') active @endif">
+								<span class="micon dw dw-money"></span><span class="mtext">Pemasukan</span>
+								<a href="/admin/pengeluaran" class="dropdown-toggle no-arrow @if ($activePage == 'pengeluaran') active @endif">
+								<span class="micon dw dw-shopping-cart"></span><span class="mtext">Pengeluaran</span> -->
+							</a>
 							</ul>
 						</li>
 						<li>

@@ -7,36 +7,38 @@
       <div class="row">
          <div class="col-md-6 col-sm-12">
             <div class="title">
-               <h4>Edit Metode Pembayaran</h4>
+               <h4>Data Metode Pembayaran</h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="#">Data Master</a></li>
                   <li class="breadcrumb-item"><a href="/admin/metode-pembayaran">Metode Pembayaran</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Edit Data</li>
+                  <li class="breadcrumb-item active" aria-current="page">Edit Data Metode Pembayaran</li>
                </ol>
             </nav>
          </div>
       </div>
    </div>
+   <!-- Striped table start -->
    <div class="pd-20 card-box mb-30">
       <div class="clearfix">
          <div class="pull-left">
-            <h2 class="text-primary h2"><i class="icon-copy dw dw-credit-card"></i> Form Edit Metode Pembayaran</h2>
+            <h2 class="text-primary h2"><i class="icon-copy dw dw-edit-1"></i> Edit Data Metode Pembayaran</h2>
+         </div>
+         <div class="pull-right">
+            <a href="/admin/metode-pembayaran" class="btn btn-primary btn-sm"><i class="fa fa-arrow-left"></i> Back</a>
          </div>
       </div>
-      <hr style="margin-top: 0px;">
-      <form action="/admin/metode-pembayaran/update/{{$metode_pembayaran->id}}" method="POST">
-         @csrf
+      <hr style="margin-top: 0px">
+      <form action="/admin/metode-pembayaran/update/{{$metode_pembayaran->id}}" method="POST" enctype="multipart/form-data">
+         {{ csrf_field() }}
          <div class="form-group">
-            <label for="nama">Nama Metode Pembayaran</label>
-            <input type="text" class="form-control" id="nama" name="nama" value="{{$metode_pembayaran->nama}}" placeholder="Masukkan nama metode pembayaran" required>
+            <label>Nama Metode Pembayaran<span class="text-danger">*</span></label>
+            <input type="text" autofocus name="nama" required class="form-control" value="{{$metode_pembayaran->nama}}" placeholder="Masukkan Nama Metode Pembayaran .....">     
          </div>
-         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Update</button>
-            <a href="/admin/metode-pembayaran" class="btn btn-secondary">Kembali</a>
-         </div>
+         <button type="submit" class="btn btn-primary mt-1 mr-2"><span class="icon-copy ti-save"></span> Update Data</button>               
       </form>
    </div>
+   <!-- Striped table End -->
 </div>
-@endsection 
+@endsection

@@ -5,40 +5,44 @@
 <div class="min-height-200px">
    <div class="page-header">
       <div class="row">
-         <div class="col-md-6 col-sm-12">
+         <div class="col-md-12 col-sm-12">
             <div class="title">
-               <h4>Tambah Pengeluaran</h4>
+               <h4>Data Pengeluaran</h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="#">Pengeluaran</a></li>
                   <li class="breadcrumb-item"><a href="/admin/pengeluaran">Data Pengeluaran</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Tambah Data</li>
+                  <li class="breadcrumb-item active" aria-current="page">Tambah Data Pengeluaran</li>
                </ol>
             </nav>
          </div>
       </div>
    </div>
+   <!-- Striped table start -->
    <div class="pd-20 card-box mb-30">
       <div class="clearfix">
          <div class="pull-left">
-            <h2 class="text-primary h2"><i class="icon-copy dw dw-shopping-cart"></i> Form Tambah Pengeluaran</h2>
+            <h2 class="text-primary h2"><i class="icon-copy dw dw-add-file-1"></i> Tambah Data Pengeluaran</h2>
+         </div>
+         <div class="pull-right">
+            <a href="/admin/pengeluaran" class="btn btn-primary btn-sm"><i class="fa fa-arrow-left"></i> Back</a>
          </div>
       </div>
-      <hr style="margin-top: 0px;">
-      <form action="/admin/pengeluaran/create" method="POST">
-         @csrf
+      <hr style="margin-top: 0px">
+      <form action="/admin/pengeluaran/create" method="POST" enctype="multipart/form-data">
+         {{ csrf_field() }}
          <div class="form-group">
-            <label for="tanggal">Tanggal</label>
-            <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+            <label>Tanggal<span class="text-danger">*</span></label>
+            <input type="date" autofocus name="tanggal" required class="form-control">
          </div>
          <div class="form-group">
-            <label for="keterangan">Keterangan</label>
-            <textarea class="form-control" id="keterangan" name="keterangan" rows="3" placeholder="Masukkan keterangan pengeluaran" required></textarea>
+            <label>Keterangan<span class="text-danger">*</span></label>
+            <textarea name="keterangan" required class="form-control" rows="3" placeholder="Masukkan Keterangan ....."></textarea>
          </div>
          <div class="form-group">
-            <label for="id_metode">Metode Pembayaran</label>
-            <select class="form-control select2" id="id_metode" name="id_metode" required>
+            <label>Metode Pembayaran<span class="text-danger">*</span></label>
+            <select name="id_metode" required class="form-control select2">
                <option value="">Pilih Metode Pembayaran</option>
                @foreach($metode_pembayaran as $metode)
                <option value="{{$metode->id}}">{{$metode->nama}}</option>
@@ -46,14 +50,12 @@
             </select>
          </div>
          <div class="form-group">
-            <label for="total">Total</label>
-            <input type="number" class="form-control" id="total" name="total" placeholder="Masukkan total pengeluaran" required>
+            <label>Total<span class="text-danger">*</span></label>
+            <input type="number" name="total" required class="form-control" placeholder="Masukkan Total .....">
          </div>
-         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Simpan</button>
-            <a href="/admin/pengeluaran" class="btn btn-secondary">Kembali</a>
-         </div>
+         <button type="submit" class="btn btn-primary mt-1 mr-2"><span class="icon-copy ti-save"></span> Tambah Data</button>               
       </form>
    </div>
+   <!-- Striped table End -->
 </div>
-@endsection 
+@endsection
