@@ -14,12 +14,22 @@ class PemasukanController extends Controller
         $this->middleware('auth');
     }
     
-    public function read(){
-        $pemasukan = DB::table('pemasukan')
+    public function read(Request $request){
+        $query = DB::table('pemasukan')
             ->join('metode_pembayaran', 'pemasukan.id_metode', '=', 'metode_pembayaran.id')
-            ->select('pemasukan.*', 'metode_pembayaran.nama as nama_metode')
-            ->orderBy('pemasukan.id','DESC')
-            ->get();
+            ->join('users', 'pemasukan.id_user', '=', 'users.id')
+            ->select('pemasukan.*', 'metode_pembayaran.nama as nama_metode', 'users.name as nama_penginput');
+        
+        // Filter tanggal
+        if ($request->filled('start_date')) {
+            $query->where('pemasukan.tanggal', '>=', $request->start_date);
+        }
+        
+        if ($request->filled('end_date')) {
+            $query->where('pemasukan.tanggal', '<=', $request->end_date);
+        }
+        
+        $pemasukan = $query->orderBy('pemasukan.id','DESC')->get();
 
         return view('admin.pemasukan.index',['pemasukan'=>$pemasukan]);
     }
@@ -32,6 +42,7 @@ class PemasukanController extends Controller
     public function create(Request $request){
         DB::table('pemasukan')->insert([  
             'tanggal' => $request->tanggal,
+            'id_user' => Auth::user()->id,
             'keterangan' => $request->keterangan,
             'id_metode' => $request->id_metode,
             'total' => $request->total]);

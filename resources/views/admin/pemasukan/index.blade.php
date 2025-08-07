@@ -11,10 +11,26 @@
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#">Pemasukan</a></li>
+                  <li class="breadcrumb-item"><a href="#">Data Input</a></li>
                   <li class="breadcrumb-item active" aria-current="page">Data Pemasukan</li>
                </ol>
             </nav>
+         </div>
+         <div class="col-md-6 col-sm-12">
+            <div class="pull-right">
+               <form method="GET" action="/admin/pemasukan" class="form-inline">
+                  <div class="form-group mr-2">
+                     <input type="date" name="start_date" class="form-control form-control-sm" value="{{ request('start_date') }}" placeholder="Tanggal Mulai">
+                  </div>
+                  <div class="form-group mr-2">
+                     <input type="date" name="end_date" class="form-control form-control-sm" value="{{ request('end_date') }}" placeholder="Tanggal Akhir">
+                  </div>
+                  <div class="form-group">
+                     <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button>
+                     <a href="/admin/pemasukan" class="btn btn-secondary btn-sm"><i class="fa fa-refresh"></i></a>
+                  </div>
+               </form>
+            </div>
          </div>
       </div>
    </div>
@@ -29,6 +45,7 @@
          </div>
       </div>
       <hr style="margin-top: 0px;">
+      
       @if (session('error'))
       <div class="alert alert-danger">
          {{ session('error')}}
@@ -45,34 +62,36 @@
          </button>
       </div>
       @endif
-      <table class="table table-striped table-bordered data-table hover">
-         <thead class="bg-primary text-white">
-            <tr>
-               <th width="5%" >#</th>
-               <th>Tanggal</th>
-               <th>Keterangan</th>
-               <th>Metode Pembayaran</th>
-               <th>Total</th>
-               <th class="table-plus datatable-nosort text-center">Action</th>
-            </tr>
-         </thead>
-         <tbody>
-            <?php $no = 1; ?>
-            @foreach($pemasukan as $data)
-            <tr>
-               <td class="text-center">{{$no++}}</td>
-               <td>{{date('d/m/Y', strtotime($data->tanggal))}}</td>
-               <td>{{$data->keterangan}}</td>
-               <td>{{$data->nama_metode}}</td>
-               <td>Rp {{number_format($data->total, 0, ',', '.')}}</td>
-               <td class="text-center" width="15%">
-                  <a href="/admin/pemasukan/edit/{{$data->id}}"><button class="btn btn-success btn-xs"><i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Edit Data"></i></button></a>
-                  <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#data-{{$data->id}}"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Data"></i></button>
-               </td>
-            </tr>
-            @endforeach
-         </tbody>
-      </table>
+             <table class="table table-striped table-bordered data-table hover">
+          <thead class="bg-primary text-white">
+             <tr>
+                <th width="5%" >#</th>
+                <th>Tanggal</th>
+                <th>Keterangan</th>
+                <th>Penginput</th>
+                <th>Metode Pembayaran</th>
+                <th>Total</th>
+                <th class="table-plus datatable-nosort text-center">Action</th>
+             </tr>
+          </thead>
+          <tbody>
+             <?php $no = 1; ?>
+             @foreach($pemasukan as $data)
+             <tr>
+                <td class="text-center">{{$no++}}</td>
+                <td>{{date('d/m/Y', strtotime($data->tanggal))}}</td>
+                <td>{{$data->keterangan}}</td>
+                <td>{{$data->nama_penginput}}</td>
+                <td>{{$data->nama_metode}}</td>
+                <td>Rp {{number_format($data->total, 0, ',', '.')}}</td>
+                <td class="text-center" width="15%">
+                   <a href="/admin/pemasukan/edit/{{$data->id}}"><button class="btn btn-success btn-xs"><i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Edit Data"></i></button></a>
+                   <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#data-{{$data->id}}"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Data"></i></button>
+                </td>
+             </tr>
+             @endforeach
+          </tbody>
+       </table>
    </div>
    <!-- Striped table End -->
 </div>
@@ -90,14 +109,18 @@
                <label for="exampleInputUsername1">Tanggal</label>
                <input class="form-control" value="{{date('d/m/Y', strtotime($data->tanggal))}}" readonly style="background-color: white;pointer-events: none;">
             </div>
-            <div class="form-group" style="font-size: 17px;">
-               <label for="exampleInputUsername1">Keterangan</label>
-               <input class="form-control" value="{{$data->keterangan}}" readonly style="background-color: white;pointer-events: none;">
-            </div>
-            <div class="form-group" style="font-size: 17px;">
-               <label for="exampleInputUsername1">Total</label>
-               <input class="form-control" value="Rp {{number_format($data->total, 0, ',', '.')}}" readonly style="background-color: white;pointer-events: none;">
-            </div>
+                         <div class="form-group" style="font-size: 17px;">
+                <label for="exampleInputUsername1">Keterangan</label>
+                <input class="form-control" value="{{$data->keterangan}}" readonly style="background-color: white;pointer-events: none;">
+             </div>
+             <div class="form-group" style="font-size: 17px;">
+                <label for="exampleInputUsername1">Penginput</label>
+                <input class="form-control" value="{{$data->nama_penginput}}" readonly style="background-color: white;pointer-events: none;">
+             </div>
+             <div class="form-group" style="font-size: 17px;">
+                <label for="exampleInputUsername1">Total</label>
+                <input class="form-control" value="Rp {{number_format($data->total, 0, ',', '.')}}" readonly style="background-color: white;pointer-events: none;">
+             </div>
             <div class="row mt-4">
                <div class="col-md-6">
                   <a href="/admin/pemasukan/delete/{{$data->id}}" style="text-decoration: none;">

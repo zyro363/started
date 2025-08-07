@@ -37,6 +37,15 @@
             <input type="date" autofocus name="tanggal" value="{{$pengeluaran->tanggal}}" required class="form-control">
          </div>
          <div class="form-group">
+            <label>Data Barang<span class="text-danger">*</span></label>
+            <select name="id_barang" required class="form-control select2">
+               <option value="">Pilih Data Barang</option>
+               @foreach($barang as $item)
+               <option value="{{$item->id}}" {{$pengeluaran->id_barang == $item->id ? 'selected' : ''}}>{{$item->nama}} ({{$item->nama_kategori}} - {{$item->nama_jenis}}) - Rp {{number_format($item->harga, 0, ',', '.')}}</option>
+               @endforeach
+            </select>
+         </div>
+         <div class="form-group">
             <label>Keterangan<span class="text-danger">*</span></label>
             <textarea name="keterangan" required class="form-control" rows="3" placeholder="Masukkan Keterangan .....">{{$pengeluaran->keterangan}}</textarea>
          </div>
