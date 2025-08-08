@@ -2,6 +2,63 @@
 'activePage' => 'pengeluaran',
 ])
 @section('content')
+<style>
+.date-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.date-input {
+    position: relative;
+    display: inline-block;
+}
+.date-input input[type="date"] {
+    padding: 8px 35px 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #f8f9fa;
+    font-size: 14px;
+    color: #333;
+    width: 150px;
+}
+.date-input::after {
+    /* content: "📅"; */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 14px;
+}
+.filter-btn {
+    padding: 8px 15px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.filter-btn:hover {
+    background: #0056b3;
+}
+.reset-btn {
+    padding: 8px 15px;
+    background: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+}
+.reset-btn:hover {
+    background: #545b62;
+    color: white;
+    text-decoration: none;
+}
+</style>
+
 <div class="min-height-200px">
    <div class="page-header">
       <div class="row">
@@ -18,17 +75,12 @@
          </div>
          <div class="col-md-6 col-sm-12">
             <div class="pull-right">
-               <form method="GET" action="/admin/pengeluaran" class="form-inline">
-                  <div class="form-group mr-2">
-                     <input type="date" name="start_date" class="form-control form-control-sm" value="{{ request('start_date') }}" placeholder="Tanggal Mulai">
+               <form method="GET" action="/admin/pengeluaran" class="date-filter">
+                  <div class="date-input">
+                     <input type="date" name="filter_date" class="form-control" value="{{ request('filter_date', date('Y-m-d')) }}">
                   </div>
-                  <div class="form-group mr-2">
-                     <input type="date" name="end_date" class="form-control form-control-sm" value="{{ request('end_date') }}" placeholder="Tanggal Akhir">
-                  </div>
-                  <div class="form-group">
-                     <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button>
-                     <a href="/admin/pengeluaran" class="btn btn-secondary btn-sm"><i class="fa fa-refresh"></i></a>
-                  </div>
+                  <button type="submit" class="filter-btn">Filter</button>
+                  <a href="/admin/pengeluaran" class="reset-btn">Reset</a>
                </form>
             </div>
          </div>
@@ -68,8 +120,8 @@
                 <th width="5%" >#</th>
                 <th>Tanggal</th>
                 <th>Keterangan</th>
-                <th>Penginput</th>
-                <th>Data Barang</th>
+                <!-- <th>Penginput</th> -->
+                <!-- <th>Data Barang</th> -->
                 <th>Metode Pembayaran</th>
                 <th>Total</th>
                 <th class="table-plus datatable-nosort text-center">Action</th>
@@ -82,12 +134,14 @@
                  <td class="text-center">{{$no++}}</td>
                  <td>{{date('d/m/Y', strtotime($data->tanggal))}}</td>
                  <td>{{$data->keterangan}}</td>
-                 <td>{{$data->nama_penginput}}</td>
+                 <!-- <td>{{$data->nama_penginput}}</td> -->
+                 <!--
                  <td>
                     <strong>{{$data->nama_barang}}</strong><br>
                     <small class="text-muted">{{$data->nama_kategori}} - {{$data->nama_jenis}}</small><br>
                     <small class="text-info">Rp {{number_format($data->harga_barang, 0, ',', '.')}}</small>
                  </td>
+                 -->
                  <td>{{$data->nama_metode}}</td>
                  <td>Rp {{number_format($data->total, 0, ',', '.')}}</td>
                  <td class="text-center" width="15%">
@@ -119,6 +173,7 @@
                 <label for="exampleInputUsername1">Keterangan</label>
                 <input class="form-control" value="{{$data->keterangan}}" readonly style="background-color: white;pointer-events: none;">
              </div>
+             <!--
              <div class="form-group" style="font-size: 17px;">
                 <label for="exampleInputUsername1">Penginput</label>
                 <input class="form-control" value="{{$data->nama_penginput}}" readonly style="background-color: white;pointer-events: none;">
@@ -127,6 +182,7 @@
                 <label for="exampleInputUsername1">Data Barang</label>
                 <input class="form-control" value="{{$data->nama_barang}} ({{$data->nama_kategori}} - {{$data->nama_jenis}}) - Rp {{number_format($data->harga_barang, 0, ',', '.')}}" readonly style="background-color: white;pointer-events: none;">
              </div>
+             -->
              <div class="form-group" style="font-size: 17px;">
                 <label for="exampleInputUsername1">Total</label>
                 <input class="form-control" value="Rp {{number_format($data->total, 0, ',', '.')}}" readonly style="background-color: white;pointer-events: none;">
